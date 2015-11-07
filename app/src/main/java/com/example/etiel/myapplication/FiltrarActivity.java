@@ -101,7 +101,7 @@ public class FiltrarActivity extends AppCompatActivity {
             String texto;
             for (int i=0;i<jsonArray.length();i++){
                 texto=jsonArray.getJSONObject(i).getString("name")+" "+
-                         jsonArray.getJSONObject(i).getString("description");
+                         jsonArray.getJSONObject(i).getString("price");
                 listado.add(texto);
             }
 
