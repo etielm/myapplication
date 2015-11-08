@@ -21,11 +21,7 @@
         <activity
             android:name=".LaunchAct"
             android:label="@string/title_activity_launch" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Activity_shoppingcart"
@@ -38,6 +34,15 @@
         <activity
             android:name=".FiltrarActivity"
             android:label="@string/title_activity_filtrar" >
+        </activity>
+        <activity
+            android:name=".MenuActivity"
+            android:label="@string/title_activity_menu" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

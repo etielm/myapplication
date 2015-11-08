@@ -32,4 +32,13 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_mostrar_prod">MostrarProd</string>
     <string name="title_activity_filtrar">FiltrarActivity</string>
+    <string name="title_activity_menu">MenuActivity</string>
+
+    <string name="title_section1">Escanear codigo QR</string>
+    <string name="title_section2">Madera</string>
+    <string name="title_section3">Bisutería</string>
+    <string name="title_section4">Tejidos</string>
+    <string name="title_section5">Orfebrería</string>
+    <string name="title_section6">Todas las categorias</string>
+    <string name="title_section7">Carrito de compras</string>
 </resources>
