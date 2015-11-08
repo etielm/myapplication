@@ -63,7 +63,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
     private static Button bt_scan;
     private static ListView listado;
     private static CustomAdapter adapter;
-    private static ArrayList<String> alistado;
+    private static ArrayList<Producto> alistado;
     private static Context cont;
 
     @Override
@@ -71,7 +71,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        alistado=new ArrayList<String>();
+        alistado=new ArrayList<Producto>();
         cont=getApplicationContext();
 
         // Set up the action bar.
@@ -275,6 +275,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
 
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            /*
                             Integer textlength = ET_buscar.getText().length();
                             ArrayList<String> array_sort = new ArrayList<String>();
 
@@ -288,6 +289,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                             adapter = //construimos un adapter de String
                                     new CustomAdapter(cont, array_sort);
                             listado.setAdapter(adapter);
+                            */
                         }
 
                         @Override
@@ -364,11 +366,8 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
         });
     }
     public static void CargaLista(ArrayList<Producto> datos,int menu){
-        alistado.clear();
-    for (int i=0;i<datos.size();i++) {
-        alistado.add(datos.get(i).getName());
-    }
-        Log.d("pfin ho,ho,", alistado.get(1));
+        alistado=datos;
+        Log.d("pfin ho,ho,", alistado.get(1).getName());
         switch (menu){
             case 2:
                 adapter = //construimos un adapter de String
