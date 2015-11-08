@@ -267,7 +267,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                     listado = (ListView)rootView.findViewById(R.id.listView);
                     ET_buscar = (EditText) rootView.findViewById(R.id.ET_buscar);
                     ObtDatos(menu);
-                    Log.d("pfin gen","se genero");
+                    Log.d("pfin gen", "se genero");
                     ET_buscar.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -276,8 +276,19 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
 
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
-                            adapter.getFilter().filter(s);
+                            Integer textlength = ET_buscar.getText().length();
+                            ArrayList<String> array_sort = new ArrayList<String>();
 
+                            for (int i = 0; i < alistado.size(); i++) {
+                                if (textlength <= alistado.get(i).length()) {
+                                    if (ET_buscar.getText().toString().equalsIgnoreCase((String) alistado.get(i).subSequence(0, textlength))) {
+                                        array_sort.add(alistado.get(i));
+                                    }
+                                }
+                            }
+                            adapter = //construimos un adapter de String
+                                    new CustomAdapter(cont, array_sort);
+                            listado.setAdapter(adapter);
                         }
 
                         @Override
