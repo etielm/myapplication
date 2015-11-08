@@ -15,13 +15,11 @@ import java.util.List;
 /**
  * Created by Etiel on 08/11/2015.
  */
-public class CustomAdapter extends BaseAdapter implements Filterable {
+public class CustomAdapter extends BaseAdapter {
 
     private static final String TAG="AS_ListView";
     private Context context;
     private List<String> values;
-    private ArrayFilter mFilter;
-    private List<String> mObjects,mOriginalValues;
     private final Object mLock = new Object();
 
 
@@ -61,79 +59,5 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
         return view;
     }
 
-    @Override
-    public Filter getFilter() {
-        if (mFilter == null) {
-            mFilter = new ArrayFilter();
-        }
-        return mFilter;
-    }
-    private class ArrayFilter extends Filter {
-        @Override
-        protected FilterResults performFiltering(CharSequence prefix) {
-            FilterResults results = new FilterResults();
 
-            if (mOriginalValues == null) {
-                synchronized (mLock) {
-                    mOriginalValues = new ArrayList<String>(mObjects);
-                }
-            }
-
-            if (prefix == null || prefix.length() == 0) {
-                ArrayList<String> list;
-                synchronized (mLock) {
-                    list = new ArrayList<String>(mOriginalValues);
-                }
-                results.values = list;
-                results.count = list.size();
-            } else {
-                String prefixString = prefix.toString().toLowerCase();
-
-                ArrayList<String> values;
-                synchronized (mLock) {
-                    values = new ArrayList<String>(mOriginalValues);
-                }
-
-                final int count = values.size();
-                final ArrayList<String> newValues = new ArrayList<String>();
-
-                for (int i = 0; i < count; i++) {
-                    final String value = values.get(i);
-                    final String valueText = value.toString().toLowerCase();
-
-                    // First match against the whole, non-splitted value
-                    if (valueText.startsWith(prefixString)) {
-                        newValues.add(value);
-                    } else {
-                        final String[] words = valueText.split(" ");
-                        final int wordCount = words.length;
-
-                        // Start at index 0, in case valueText starts with space(s)
-                        for (int k = 0; k < wordCount; k++) {
-                            if (words[k].startsWith(prefixString)) {
-                                newValues.add(value);
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                results.values = newValues;
-                results.count = newValues.size();
-            }
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            //noinspection unchecked
-            mObjects = (List<String>) results.values;
-            if (results.count > 0) {
-                notifyDataSetChanged();
-            } else {
-                notifyDataSetInvalidated();
-            }
-        }
-    }
 }

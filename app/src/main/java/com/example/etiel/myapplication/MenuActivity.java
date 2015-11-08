@@ -1,23 +1,22 @@
 package com.example.etiel.myapplication;
 
-import java.util.ArrayList;
-import java.util.Locale;
 
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,14 +32,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.*;
 
 import org.json.JSONArray;
 
-import cz.msebera.android.httpclient.Header;
+import java.util.ArrayList;
+import java.util.Locale;
 
+import cz.msebera.android.httpclient.Header;
 public class MenuActivity extends AppCompatActivity implements ActionBar.TabListener {
 
     /**
@@ -346,13 +345,14 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
         RequestParams parametros = new RequestParams();
         //parametros.put("Edad",18);      //numero
         //parametros.put("Edad", "18");    //texto
-
+        Log.d("obtdatos","l");
         client.post(url, parametros, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 if (statusCode == 200) {
                     //llamar a la funcion
-                    CargaLista(ObtDatosJSON(new String (responseBody)),menu);
+                    Log.d("llamo la carga","l");
+                    CargaLista(ObtDatosJSON(new String(responseBody)), menu);
 
                 }
             }
@@ -363,9 +363,11 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
             }
         });
     }
-    public static void CargaLista(ArrayList<String> datos,int menu){
-
-        alistado=datos;
+    public static void CargaLista(ArrayList<Producto> datos,int menu){
+        alistado.clear();
+    for (int i=0;i<datos.size();i++) {
+        alistado.add(datos.get(i).getName());
+    }
         Log.d("pfin ho,ho,", alistado.get(1));
         switch (menu){
             case 2:
@@ -408,16 +410,19 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
     }
 
 
-    public static ArrayList<String> ObtDatosJSON(String response){
-        ArrayList mlistado= new ArrayList<String>();
+    public static ArrayList<Producto> ObtDatosJSON(String response){
+        ArrayList mlistado= new ArrayList<Producto>();
         try{
             JSONArray jsonArray = new JSONArray(response);
             String texto;
+            Producto p;
             for (int i=0;i<jsonArray.length();i++){
-                texto=jsonArray.getJSONObject(i).getString("name")+" "+
-                        jsonArray.getJSONObject(i).getString("price");
-                mlistado.add(texto);
-                Log.d("pfin ho,ho", texto);
+                //texto=jsonArray.getJSONObject(i).getString("name")+" "+
+                  //      jsonArray.getJSONObject(i).getString("price");
+                //mlistado.add(texto);
+                p=new Producto(jsonArray.getJSONObject(i).getString("name"),jsonArray.getJSONObject(i).getString("price"),jsonArray.getJSONObject(i).getString("image_file_name"),jsonArray.getJSONObject(i).getString("id"));
+                Log.d("pfin ho,ho", p.getName());
+                mlistado.add(p);
             }
 
         }catch(Exception e){
