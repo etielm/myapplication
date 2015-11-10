@@ -1,25 +1,20 @@
 package com.example.etiel.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,11 +51,12 @@ public class CustomAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup parent) {
+    public View getView(final int position, View view, ViewGroup parent) {
         String nombre=values.get(position).getName();
         String precio=values.get(position).getPrice();
         String imagen=values.get(position).getImage();
         String id=values.get(position).getId();
+        Bitmap snap=values.get(position).getPic();
         if(view==null){
             LayoutInflater inflater =(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view=inflater.inflate(R.layout.my_list_item,null);
@@ -69,22 +65,41 @@ public class CustomAdapter extends BaseAdapter {
 
         TextView texto=(TextView) view.findViewById(R.id.dispres);
         ImageView pic=(ImageView) view.findViewById(R.id.pic);
-        texto.setText(nombre + "\n" + precio);
+        pic.setImageBitmap(snap);
+        Integer a=view.getResources().getIdentifier("pic", "id", MenuActivity.class.getPackage().getName());
+        Log.d("pfin yeha",Integer.toString(a));
+        texto.setText(nombre + "\n$" + precio);
         //pic.setImageResource(R.drawable.abc_btn_check_material);
         view.setTag(nombre);
         String url="https://s3.amazonaws.com/producpic/products/images/000/000/";
+        //url https://s3.amazonaws.com/producpic/products/images/000/000/002/thumb/marimonda_carnaval.jpg
         url=url+String.format("%03d",Integer.parseInt(id))+"/thumb/"+imagen;
-        new DownloadImageTask(pic)
-                .execute(url);
+       // new DownloadImageTask(pic)
+         //       .execute(url);
+        texto.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(context, DescripcionActivity.class);
+                intent.putExtra("userTag",values.get(position));
+                Log.d("Desarrollo", "Se abrio la descripcion");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
+
         return view;
     }
 
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
+        Integer n;
 
-        public DownloadImageTask(ImageView bmImage) {
+        public DownloadImageTask(ImageView bmImage,Integer n) {
             this.bmImage = bmImage;
+            this.n=n;
         }
 
         protected Bitmap doInBackground(String... urls) {
@@ -104,4 +119,5 @@ public class CustomAdapter extends BaseAdapter {
             bmImage.setImageBitmap(result);
         }
     }
+
 }

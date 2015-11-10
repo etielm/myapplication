@@ -21,7 +21,6 @@
         <activity
             android:name=".LaunchAct"
             android:label="@string/title_activity_launch" >
-
         </activity>
         <activity
             android:name=".Activity_shoppingcart"
@@ -43,6 +42,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".DescripcionActivity"
+            android:label="@string/title_activity_descripcion"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 

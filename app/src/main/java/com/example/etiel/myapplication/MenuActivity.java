@@ -1,19 +1,20 @@
 package com.example.etiel.myapplication;
 
 
+import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBar;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.content.Intent;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -24,18 +25,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.loopj.android.http.*;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -65,11 +68,13 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
     private static CustomAdapter adapter;
     private static ArrayList<Producto> alistado;
     private static Context cont;
+    Dialog dialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
 
         alistado=new ArrayList<Producto>();
         cont=getApplicationContext();
@@ -275,13 +280,13 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
 
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
-                            /*
+
                             Integer textlength = ET_buscar.getText().length();
-                            ArrayList<String> array_sort = new ArrayList<String>();
+                            ArrayList<Producto> array_sort = new ArrayList<Producto>();
 
                             for (int i = 0; i < alistado.size(); i++) {
-                                if (textlength <= alistado.get(i).length()) {
-                                    if (ET_buscar.getText().toString().equalsIgnoreCase((String) alistado.get(i).subSequence(0, textlength))) {
+                                if (textlength <= alistado.get(i).getName().length()) {
+                                    if (ET_buscar.getText().toString().equalsIgnoreCase((String) alistado.get(i).getName().subSequence(0, textlength))) {
                                         array_sort.add(alistado.get(i));
                                     }
                                 }
@@ -289,7 +294,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                             adapter = //construimos un adapter de String
                                     new CustomAdapter(cont, array_sort);
                             listado.setAdapter(adapter);
-                            */
+
                         }
 
                         @Override
@@ -367,12 +372,23 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
     }
     public static void CargaLista(ArrayList<Producto> datos,int menu){
         alistado=datos;
-        Log.d("pfin ho,ho,", alistado.get(1).getName());
+//        Log.d("pfin ho,ho,", alistado.get(1).getName());
         switch (menu){
             case 2:
-                adapter = //construimos un adapter de String
-                        new CustomAdapter(cont,alistado);
-                listado.setAdapter(adapter);
+                //adapter = //construimos un adapter de String
+                  //      new CustomAdapter(cont,alistado);
+                //listado.setAdapter(adapter);
+
+                for (int i = 0; i < alistado.size(); i++){
+                    String imagen=alistado.get(i).getImage();
+                    String id=alistado.get(i).getId();
+                    String url="https://s3.amazonaws.com/producpic/products/images/000/000/";
+                    //url https://s3.amazonaws.com/producpic/products/images/000/000/002/thumb/marimonda_carnaval.jpg
+                    url=url+String.format("%03d",Integer.parseInt(id))+"/thumb/"+imagen;
+                    new DownloadImageTask(i)
+                       .execute(url);
+                }
+
                 break;
             default:
                 break;
@@ -430,4 +446,64 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
 
         return mlistado;
     }
+    private static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+        Integer n;
+
+        public DownloadImageTask(Integer n) {
+            this.n=n;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            //bmImage.setImageBitmap(result);
+            alistado.get(n).setPic(result);
+            if(n==(alistado.size()-1)){
+                adapter = //construimos un adapter de String
+                      new CustomAdapter(cont,alistado);
+                listado.setAdapter(adapter);
+            }
+        }
+    }
+    /*public void abrirDescripcion(View view){
+        Intent intent = new Intent(this, DescripcionActivity.class);
+        //intent.putExtra("Nivel", pickerlvl.getValue());
+        Log.d("Desarrollo", "Se abrio la descripcion");
+        startActivity(intent);
+    }*/
+    /*public void Descripcion(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        builder.setTitle("Registra tu nombre");
+        builder.setView(inflater.inflate(R.layout.content_descripcion, null));
+        builder.setNegativeButton("Ahora no", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                return;
+            }
+        });
+        builder = builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                return;
+            }
+        });
+        dialog = builder.create();
+
+        dialog.show();
+
+    }*/
 }

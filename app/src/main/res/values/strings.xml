@@ -41,4 +41,5 @@
     <string name="title_section5">Orfebrería</string>
     <string name="title_section6">Todas las categorias</string>
     <string name="title_section7">Carrito de compras</string>
+    <string name="title_activity_descripcion">DescripcionActivity</string>
 </resources>
