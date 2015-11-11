@@ -1017,7 +1017,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                 }
                 break;
             case 10:
-                alistado3=datos;
+                alistado10=datos;
                 //adapter = //construimos un adapter de String
                 //      new CustomAdapter(cont,alistado);
                 //listado.setAdapter(adapter);
