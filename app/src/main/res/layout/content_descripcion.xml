@@ -30,7 +30,7 @@
         android:id="@+id/imagen"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="13"/>
+        android:layout_weight="8"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -46,13 +46,48 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <Button
+            android:id="@+id/bmas"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="+"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/quantity"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="20sp"/>
+        <Button
+            android:id="@+id/bmenos"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_gravity="center"
+            android:text="-"
+            android:textSize="20sp"/>
+        </LinearLayout>
     <TextView
         android:id="@+id/precio"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:text="Aca va el precio"
-        android:gravity="right|center"/>
+        android:gravity="right|center"
+        android:textSize="20sp"/>
+    </LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -60,6 +95,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"/>
+        android:layout_weight="8"/>
 
 </LinearLayout>

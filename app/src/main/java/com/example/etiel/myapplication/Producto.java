@@ -12,15 +12,16 @@ import java.io.ByteArrayOutputStream;
  * Created by Etiel on 08/11/2015.
  */
 public class Producto implements Parcelable{
-    private String name,price,image,id;
+    private String name,price,image,id,description;
     private Bitmap pic;
     private int quantity=0;
 
-    public Producto(String nombre,String precio,String imagen,String id){
+    public Producto(String nombre,String precio,String imagen,String id,String descripcion){
         this.name=nombre;
         this.price=precio;
         this.image=imagen;
         this.id=id;
+        this.description=descripcion;
     }
 
     public String getName(){
@@ -34,7 +35,10 @@ public class Producto implements Parcelable{
     }
     public Bitmap getPic(){return this.pic;}
     public String getId(){return this.id;}
+    public String getDescription(){return this.description;}
+    public Integer getQuantity(){return this.quantity;}
     public void setPic(Bitmap pic){this.pic=pic;}
+    public void setQuantity(Integer cantidad){this.quantity=cantidad;}
     public void plusQuantity(int cantidad){this.quantity=(this.quantity+cantidad);}
 
     public void lessQuantity(int cantidad) {
@@ -44,17 +48,18 @@ public class Producto implements Parcelable{
     }
 
     public Producto(Parcel in){
-        String[] data= new String[6];
+        String[] data= new String[7];
 
         in.readStringArray(data);
         this.name= data[0];
         this.price= data[1];
         this.image= data[2];
         this.id=data[3];
-        byte [] encodeByte= Base64.decode(data[4], Base64.DEFAULT);
+        this.description=data[4];
+        byte [] encodeByte= Base64.decode(data[5], Base64.DEFAULT);
         Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
         this.pic=bitmap;
-        this.quantity=Integer.parseInt(data[5]);
+        this.quantity=Integer.parseInt(data[6]);
     }
     @Override
     public int describeContents() {
@@ -69,7 +74,7 @@ public class Producto implements Parcelable{
         this.pic.compress(Bitmap.CompressFormat.PNG,100, baos);
         byte [] b=baos.toByteArray();
         String temp=Base64.encodeToString(b, Base64.DEFAULT);
-        dest.writeStringArray(new String[]{this.name,this.price,this.image,this.id, temp,String.valueOf(this.quantity)});
+        dest.writeStringArray(new String[]{this.name,this.price,this.image,this.id,this.description,temp,String.valueOf(this.quantity)});
     }
 
     public static final Parcelable.Creator<Producto> CREATOR= new Parcelable.Creator<Producto>() {

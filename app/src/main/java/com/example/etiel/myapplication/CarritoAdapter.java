@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by Etiel on 08/11/2015.
  */
-public class CustomAdapter extends BaseAdapter {
+public class CarritoAdapter extends BaseAdapter {
 
     private static final String TAG="AS_ListView";
     private Context context;
@@ -29,7 +29,7 @@ public class CustomAdapter extends BaseAdapter {
 
 
 
-    public CustomAdapter(Context context,List<Producto> values){
+    public CarritoAdapter(Context context, List<Producto> values){
         this.context= context;
         this.values=values;
     }
@@ -54,14 +54,14 @@ public class CustomAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
         String nombre=values.get(position).getName();
-        String precio=values.get(position).getPrice();
+        String precio=(Integer.toString(Integer.parseInt(values.get(position).getPrice()) * values.get(position).getQuantity()));
         String imagen=values.get(position).getImage();
         String id=values.get(position).getId();
-        Integer cantidad=values.get(position).getQuantity();
         Bitmap snap=values.get(position).getPic();
+        Integer cantidad=values.get(position).getQuantity();
         if(view==null){
             LayoutInflater inflater =(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view=inflater.inflate(R.layout.my_list_item,null);
+            view=inflater.inflate(R.layout.my_carrito_item,null);
         }
         URL imageUrl = null;
 
@@ -70,7 +70,7 @@ public class CustomAdapter extends BaseAdapter {
         pic.setImageBitmap(snap);
         Integer a=view.getResources().getIdentifier("pic", "id", MenuActivity.class.getPackage().getName());
         Log.d("pfin yeha",Integer.toString(a));
-        texto.setText(nombre + "\nCant:" + Integer.toString(cantidad) + "\n$" + precio);
+        texto.setText(nombre +"\nCant:"+Integer.toString(cantidad)+"\n$" + precio);
         //pic.setImageResource(R.drawable.abc_btn_check_material);
         view.setTag(nombre);
         String url="https://s3.amazonaws.com/producpic/products/images/000/000/";
@@ -108,7 +108,7 @@ public class CustomAdapter extends BaseAdapter {
             String urldisplay = urls[0];
             Bitmap mIcon11 = null;
             try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
+                InputStream in = new URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());

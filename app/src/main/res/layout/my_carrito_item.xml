@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    >
+
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="15"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/dispres"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="left|center"
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp"
+        android:text="Aca va el Historial"
+        android:textColor="@color/abc_primary_text_disable_only_material_light"
+        android:textSize="26sp"
+        android:clickable="true"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    <ImageView
+        android:id="@+id/pic"
+        android:layout_width="100px"
+        android:layout_height="100px"
+        android:layout_gravity="right|center"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>
