@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- modulo identf-->
-    <string name="app_name">TuPoArt</string>
+    <string name="app_name">Portal de Artesanías</string>
     <string name="bt_scan">Escanear Codigo</string>
     <string name="bt_volver">Volver</string>
     <string name="titleapp">Tu Portal de Artesanías</string>

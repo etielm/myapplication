@@ -7,80 +7,65 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.etiel.myapplication.MenuActivity$PlaceholderFragment">
-
-<Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bt_scan"
-        android:id="@+id/bt_scan"
-        android:layout_marginTop="36dp"
-        android:background="#fe5f55"
-        android:layout_below="@+id/textView2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:id="@+id/textView"
-        android:background="#d6d1b1"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:hint="Informacion leida"
-        android:layout_below="@+id/bt_scan"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/titleapp"
         android:id="@+id/textView2"
-        android:background="#c7efcf"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:background="#c7efcf" />
+
 
     <WebView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:id="@+id/wv_prod"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/textView" />
-
-    <Button
+         />
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bt_buscar"
-        android:onClick="buscarOnClick"
-        android:background="#fe5f55"
-        android:id="@+id/bt_buscar"
-        android:layout_above="@+id/textView"
-        android:layout_centerHorizontal="true" />
+        android:text=""
+        android:id="@+id/textView"
+        android:background="#d6d1b1"
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bt_volver"
-        android:onClick="VolverOnClick"
-        android:background="#fe5f55"
-        android:id="@+id/bt_volver"
-        android:layout_alignTop="@+id/bt_buscar"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
+        android:hint="Informacion leida"
+        />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignTop="@+id/textView2"
+        android:layout_height="wrap_content"
+        android:gravity="center"
         android:id="@+id/linearl">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bt_scan"
+            android:id="@+id/bt_scan"
+            android:background="#fe5f55"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:src="@drawable/ic_carrito" />
 
     </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>
 
 </RelativeLayout>

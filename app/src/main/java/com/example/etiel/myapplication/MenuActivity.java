@@ -85,6 +85,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
     private static CustomAdapter adapter;
     static CarritoAdapter adapterc;
     private static ArrayList<Producto> alistado2,alistado3,alistado4,alistado5,alistado6,alistado7,alistado8,alistado9,alistado10,alistado11;
+    public static Producto qr;
     public static Context cont;
     static Dialog dialog = null;
     public static ArrayList<Producto> compras;
@@ -118,7 +119,9 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
+
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setDisplayShowHomeEnabled(true);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -375,6 +378,40 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
 
                         @Override
                         public void afterTextChanged(Editable s) {
+                            String id = "";
+                            String txt = String.valueOf(Texto.getText());
+                            String rev;
+                            for (int i = txt.length(); i > (txt.length() - 4); i--) {
+                                rev = String.valueOf(txt.subSequence(i - 1, i));
+                                if (rev.equals("/")) {
+                                    id = String.valueOf(txt.subSequence(i, txt.length()));
+                                }
+                            }
+                            Snackbar.make(myview, id, Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                            ObtDatos(id);
+                        }
+                    });
+                    FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            boolean sw = false;
+                            Producto producto=qr;
+                            //Log.d("pfin carrito", Integer.toString(MenuActivity.compras.size()));
+                            for (int i = 0; i < MenuActivity.compras.size(); i++) {
+                                //Log.d("pfin carrito comp", MenuActivity.compras.get(i).getId());
+                                //Log.d("pfin carrito prod", producto.getId());
+                                if (MenuActivity.compras.get(i).getId().equals(producto.getId())) {
+                                    MenuActivity.compras.get(i).plusQuantity(producto.getQuantity());
+                                    sw = true;
+                                    //Log.d("pfin carrito", Boolean.toString(sw));
+                                }
+                            }
+                            if (!sw) {
+                                MenuActivity.compras.add(producto);
+                                //Log.d("pfin carrito", "se agrego al carrito");
+                            }
 
                         }
                     });
@@ -383,7 +420,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                     listado2 = (ListView)rootView.findViewById(R.id.listView);
                     ET_buscar2 = (EditText) rootView.findViewById(R.id.ET_buscar);
                     ObtDatos(menu);
-                    Log.d("pfin gen", "se genero");
+                    //Log.d("pfin gen", "se genero");
                     ET_buscar2.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -419,7 +456,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                     listado3 = (ListView)rootView.findViewById(R.id.listView);
                     ET_buscar3 = (EditText) rootView.findViewById(R.id.ET_buscar);
                     ObtDatos(menu);
-                    Log.d("pfin gen", "se genero");
+                   // Log.d("pfin gen", "se genero");
                     ET_buscar3.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -455,7 +492,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                     listado4 = (ListView)rootView.findViewById(R.id.listView);
                     ET_buscar4 = (EditText) rootView.findViewById(R.id.ET_buscar);
                     ObtDatos(menu);
-                    Log.d("pfin gen", "se genero");
+                    //Log.d("pfin gen", "se genero");
                     ET_buscar4.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -491,7 +528,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                     listado5 = (ListView)rootView.findViewById(R.id.listView);
                     ET_buscar5 = (EditText) rootView.findViewById(R.id.ET_buscar);
                     ObtDatos(menu);
-                    Log.d("pfin gen", "se genero");
+                    //Log.d("pfin gen", "se genero");
                     ET_buscar5.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -527,7 +564,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                     listado6 = (ListView)rootView.findViewById(R.id.listView);
                     ET_buscar6 = (EditText) rootView.findViewById(R.id.ET_buscar);
                     ObtDatos(menu);
-                    Log.d("pfin gen", "se genero");
+                    //Log.d("pfin gen", "se genero");
                     ET_buscar6.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -563,7 +600,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                     listado7 = (ListView)rootView.findViewById(R.id.listView);
                     ET_buscar7 = (EditText) rootView.findViewById(R.id.ET_buscar);
                     ObtDatos(menu);
-                    Log.d("pfin gen", "se genero");
+                    //Log.d("pfin gen", "se genero");
                     ET_buscar7.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -599,7 +636,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                     listado8 = (ListView)rootView.findViewById(R.id.listView);
                     ET_buscar8 = (EditText) rootView.findViewById(R.id.ET_buscar);
                     ObtDatos(menu);
-                    Log.d("pfin gen", "se genero");
+                    //Log.d("pfin gen", "se genero");
                     ET_buscar8.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -635,7 +672,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                     listado9 = (ListView)rootView.findViewById(R.id.listView);
                     ET_buscar9 = (EditText) rootView.findViewById(R.id.ET_buscar);
                     ObtDatos(menu);
-                    Log.d("pfin gen", "se genero");
+                    //Log.d("pfin gen", "se genero");
                     ET_buscar9.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -671,7 +708,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                     listado10 = (ListView)rootView.findViewById(R.id.listView);
                     ET_buscar10 = (EditText) rootView.findViewById(R.id.ET_buscar);
                     ObtDatos(menu);
-                    Log.d("pfin gen", "se genero");
+                    //Log.d("pfin gen", "se genero");
                     ET_buscar10.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -707,7 +744,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                     listado11 = (ListView)rootView.findViewById(R.id.listView);
                     ET_buscar11 = (EditText) rootView.findViewById(R.id.ET_buscar);
                     ObtDatos(menu);
-                    Log.d("pfin gen", "se genero");
+                    //Log.d("pfin gen", "se genero");
                     ET_buscar11.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -747,32 +784,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                         @Override
                         public void onClick(View view) {
                             Login(view, getActivity());
-                            //a=new IniciarSesion(getActivity());
-                            //a.execute();
 
-                          /*AsyncHttpClient client = new AsyncHttpClient();
-                            String url="http://portalartesanias.ddns.net/login.php";
-                            RequestParams parametros = new RequestParams();
-                            parametros.put("contraseña","Etiel");      //numero
-                            parametros.put("email", "etjamircan@hotmail.com");    //texto
-                            Log.d("obtdatos","l");
-                            client.post(url, parametros, new AsyncHttpResponseHandler() {
-                                @Override
-                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                    if (statusCode == 200) {
-                                        //llamar a la funcion
-                                        Log.d("llamo la carga","l");
-                                        Snackbar.make(myview, new String(responseBody), Snackbar.LENGTH_LONG)
-                                                .setAction("Action", null).show();
-
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-                                }
-                            });*/
 
                         }
                     });
@@ -865,13 +877,39 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
         RequestParams parametros = new RequestParams();
         //parametros.put("Edad",18);      //numero
         //parametros.put("Edad", "18");    //texto
-        Log.d("obtdatos", "l");
+        //Log.d("obtdatos", "l");
         client.post(url, parametros, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 if (statusCode == 200) {
                     //llamar a la funcion
-                    Log.d("llamo la carga", "l");
+                    //Log.d("llamo la carga", "l");
+                    CargaLista(ObtDatosJSON(new String(responseBody)), menu);
+
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+    }
+    public static void ObtDatos(final String a){
+        final Integer menu=1;
+        AsyncHttpClient client = new AsyncHttpClient();
+        String url="http://portalartesanias.ddns.net/modid.php";
+
+        RequestParams parametros = new RequestParams();
+        parametros.put("id",a);      //numero
+        //parametros.put("Edad", "18");    //texto
+        //Log.d("obtdatos", "l");
+        client.post(url, parametros, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                if (statusCode == 200) {
+                    //llamar a la funcion
+                    //Log.d("llamo la carga", "l");
                     CargaLista(ObtDatosJSON(new String(responseBody)), menu);
 
                 }
@@ -885,8 +923,21 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
     }
     public static void CargaLista(ArrayList<Producto> datos,int menu){
 
-//        Log.d("pfin ho,ho,", alistado.get(1).getName());
         switch (menu){
+
+            case 1:
+                qr=datos.get(0);
+                qr.setQuantity(1);
+                Integer j=0;
+                String imagens=qr.getImage();
+                String ids=qr.getId();
+                String urls="https://s3.amazonaws.com/producpic/products/images/000/000/";
+                //url https://s3.amazonaws.com/producpic/products/images/000/000/002/thumb/marimonda_carnaval.jpg
+                urls=urls+String.format("%03d",Integer.parseInt(ids))+"/thumb/"+imagens;
+                new DownloadImageTask(j,menu)
+                        .execute(urls);
+
+                break;
             case 2:
                 alistado2=datos;
                 //adapter = //construimos un adapter de String
@@ -1052,7 +1103,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                 break;
         }
 
-        Log.d("pfin gen", "se actualizo");
+        //Log.d("pfin gen", "se actualizo");
     }
 
 
@@ -1068,7 +1119,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                 //mlistado.add(texto);
                 p=new Producto(jsonArray.getJSONObject(i).getString("name"),jsonArray.getJSONObject(i).getString("price"),jsonArray.getJSONObject(i).getString("image_file_name"),jsonArray.getJSONObject(i).getString("id"),jsonArray.getJSONObject(i).getString("description"));
                 p.setQuantity(jsonArray.getJSONObject(i).getInt("cuantity"));
-                Log.d("pfin ho,ho", p.getName());
+                //("pfin ho,ho", p.getName());
                 mlistado.add(p);
             }
 
@@ -1103,6 +1154,9 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
         protected void onPostExecute(Bitmap result) {
             //bmImage.setImageBitmap(result);
             switch (menu) {
+                case 1:
+                    qr.setPic(result);
+                    break;
                 case 2:
                 alistado2.get(n).setPic(result);
                 if (n == (alistado2.size() - 1)) {
@@ -1251,7 +1305,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                         url = new URL("http://portalartesanias.ddns.net/login.php");
                         break;
                     default:
-                        url = new URL("http://ingdanielpadilla.ml");
+                        url = new URL("http://portalartesanias.ddns.net/compra.php");
                         break;
                 }
                 HttpURLConnection conexion = (HttpURLConnection) url.openConnection();
@@ -1270,7 +1324,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                     default:
                         builder = new Uri.Builder()
                                 .appendQueryParameter("id", id)
-                                .appendQueryParameter("cuantity", cantidad);
+                                .appendQueryParameter("cantidad", cantidad);
                         break;
 
                 }
@@ -1353,7 +1407,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                 TextView password=(TextView)dialog.findViewById(R.id.password);
                 String tuser=user.getText().toString();
                 String tpassword=password.getText().toString();
-                Log.d("Password",tpassword);
+                //Log.d("Password",tpassword);
 
                 a=new IniciarSesion(context,tuser,tpassword,0);
                 a.execute();

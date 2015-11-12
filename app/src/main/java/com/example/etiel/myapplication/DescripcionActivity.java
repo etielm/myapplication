@@ -59,41 +59,56 @@ public class DescripcionActivity extends AppCompatActivity {
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-    fab.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            boolean sw = false;
-            Log.d("pfin carrito", Integer.toString(MenuActivity.compras.size()));
-            for (int i = 0; i < MenuActivity.compras.size(); i++) {
-                Log.d("pfin carrito comp", MenuActivity.compras.get(i).getId());
-                Log.d("pfin carrito prod", producto.getId());
-                if (MenuActivity.compras.get(i).getId().equals(producto.getId())) {
-                    MenuActivity.compras.get(i).plusQuantity(producto.getQuantity());
-                    sw = true;
-                    Log.d("pfin carrito", Boolean.toString(sw));
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean sw = false,delet=false;
+                Integer j=0;
+                Log.d("pfin carrito", Integer.toString(MenuActivity.compras.size()));
+                for (int i = 0; i < MenuActivity.compras.size(); i++) {
+                    Log.d("pfin carrito comp", MenuActivity.compras.get(i).getId());
+                    Log.d("pfin carrito prod", producto.getId());
+                    if (MenuActivity.compras.get(i).getId().equals(producto.getId())) {
+                        switch (MenuActivity.pestaña) {
+                            case 11:
+                                MenuActivity.compras.get(i).setQuantity(producto.getQuantity());
+                                if(MenuActivity.compras.get(i).getQuantity().equals(0)) {
+                                    j = i;
+                                    delet=true;
+                                }
+                                break;
+                            default:
+                        MenuActivity.compras.get(i).plusQuantity(producto.getQuantity());
+                                break;
+                        }
+                        sw = true;
+                        Log.d("pfin carrito", Boolean.toString(sw));
+                    }
                 }
-            }
-            if (!sw) {
-                MenuActivity.compras.add(producto);
-                Log.d("pfin carrito", "se agrego al carrito");
-            }
 
-            Handler del = new Handler();
-            del.postDelayed(new Runnable() {
-                public void run() {
-                    MenuActivity.anuncio(producto);
+                if (!sw) {
+                    MenuActivity.compras.add(producto);
+                    Log.d("pfin carrito", "se agrego al carrito");
                 }
-            }, 600);
-            finish();
 
-        }
-    });
-        switch (MenuActivity.pestaña) {
-            case 11:
-                break;
-            default:
-                break;
-        }
+                if (delet) {
+                    MenuActivity.compras.remove(j);
+                    Log.d("pfin carrito", "se agrego al carrito");
+                }
+
+
+
+                Handler del = new Handler();
+                del.postDelayed(new Runnable() {
+                    public void run() {
+                        MenuActivity.anuncio(producto);
+                    }
+                }, 600);
+                finish();
+
+            }
+        });
+
     }
 
 }
