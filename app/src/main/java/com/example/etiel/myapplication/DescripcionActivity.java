@@ -88,7 +88,7 @@ public class DescripcionActivity extends AppCompatActivity {
                     }
                 }
 
-                if (!sw) {
+                if (!sw&&!producto.getQuantity().equals(0)) {
                     MenuActivity.compras.add(producto);
                     Log.d("pfin carrito", "se agrego al carrito");
                 }
