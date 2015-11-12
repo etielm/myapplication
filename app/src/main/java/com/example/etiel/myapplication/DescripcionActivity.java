@@ -62,7 +62,7 @@ public class DescripcionActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean sw = false,delet=false;
+                boolean sw = false;
                 Integer j=0;
                 Log.d("pfin carrito", Integer.toString(MenuActivity.compras.size()));
                 for (int i = 0; i < MenuActivity.compras.size(); i++) {
@@ -73,8 +73,7 @@ public class DescripcionActivity extends AppCompatActivity {
                             case 11:
                                 MenuActivity.compras.get(i).setQuantity(producto.getQuantity());
                                 if(MenuActivity.compras.get(i).getQuantity().equals(0)) {
-                                    j = i;
-                                    delet=true;
+                                    MenuActivity.compras.remove(i);
                                 }
                                 break;
                             default:
@@ -90,12 +89,6 @@ public class DescripcionActivity extends AppCompatActivity {
                     MenuActivity.compras.add(producto);
                     Log.d("pfin carrito", "se agrego al carrito");
                 }
-
-                if (delet) {
-                    MenuActivity.compras.remove(j);
-                    Log.d("pfin carrito", "se agrego al carrito");
-                }
-
 
 
                 Handler del = new Handler();
