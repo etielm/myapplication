@@ -1,8 +1,8 @@
 package com.example.etiel.myapplication;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -12,16 +12,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.loopj.android.http.*;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
-
+/**
+ * Created by Etiel on 08/11/2015.
+ *
+ */
 public class FiltrarActivity extends AppCompatActivity {
     private ListView listado;
     private EditText ET_buscar;

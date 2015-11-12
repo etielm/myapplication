@@ -21,7 +21,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
+/**
+ * Created by Etiel on 08/11/2015.
+ *
+ */
 
 public class MostrarProd extends AppCompatActivity {
     private Button bt_mostrar;

@@ -13,7 +13,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+/**
+ * Created by Etiel on 08/11/2015.
+ *
+ */
 
 public class MainActivity extends Activity {
     //declaramos nuestro boton

@@ -10,7 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
+/**
+ * Created by Etiel on 08/11/2015.
+ *
+ */
 public class LaunchAct extends Activity {
     private Button bt_mdid;
     private Button bt_catg1;

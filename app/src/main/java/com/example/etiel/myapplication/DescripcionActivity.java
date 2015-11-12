@@ -11,7 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+/**
+ * Created by Etiel on 08/11/2015.
+ *
+ */
 public class DescripcionActivity extends AppCompatActivity {
 
     Producto producto;
@@ -95,6 +98,7 @@ public class DescripcionActivity extends AppCompatActivity {
                 del.postDelayed(new Runnable() {
                     public void run() {
                         MenuActivity.anuncio(producto);
+
                     }
                 }, 600);
                 finish();

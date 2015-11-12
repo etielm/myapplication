@@ -34,16 +34,16 @@
     <string name="title_activity_filtrar">FiltrarActivity</string>
     <string name="title_activity_menu">MenuActivity</string>
 
-    <string name="title_section1">Escanear codigo QR</string>
-    <string name="title_section2">Todas las categorias</string>
+    <string name="title_section1">Escanear código QR</string>
+    <string name="title_section2">Todas las categorías</string>
     <string name="title_section3">Madera</string>
     <string name="title_section4">Bisutería</string>
     <string name="title_section5">Tejidos</string>
     <string name="title_section6">Orfebrería</string>
-    <string name="title_section7">Ceramica</string>
+    <string name="title_section7">Cerámica</string>
     <string name="title_section8">Porcelanicron</string>
     <string name="title_section9">Pintura</string>
-    <string name="title_section10">Marroquineria</string>
+    <string name="title_section10">Marroquinería</string>
     <string name="title_section11">Tela</string>
     <string name="title_section12">Carrito de compras</string>
     <string name="title_activity_descripcion">Detalles del Producto</string>

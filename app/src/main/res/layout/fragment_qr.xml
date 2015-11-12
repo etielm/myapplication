@@ -33,7 +33,7 @@
         android:id="@+id/textView"
         android:background="#d6d1b1"
 
-        android:hint="Informacion leida"
+        android:hint="Información leída"
         />
     <LinearLayout
         android:orientation="horizontal"

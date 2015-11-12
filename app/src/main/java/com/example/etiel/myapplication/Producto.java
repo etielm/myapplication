@@ -14,7 +14,7 @@ import java.io.ByteArrayOutputStream;
 public class Producto implements Parcelable{
     private String name,price,image,id,description;
     private Bitmap pic;
-    private int quantity=0;
+    private int quantity=0,max=0;
 
     public Producto(String nombre,String precio,String imagen,String id,String descripcion){
         this.name=nombre;
@@ -22,6 +22,7 @@ public class Producto implements Parcelable{
         this.image=imagen;
         this.id=id;
         this.description=descripcion;
+
     }
 
     public String getName(){
@@ -39,7 +40,12 @@ public class Producto implements Parcelable{
     public Integer getQuantity(){return this.quantity;}
     public void setPic(Bitmap pic){this.pic=pic;}
     public void setQuantity(Integer cantidad){this.quantity=cantidad;}
-    public void plusQuantity(int cantidad){this.quantity=(this.quantity+cantidad);}
+    public void setMax(Integer cantidad){this.max=cantidad;}
+    public void plusQuantity(int cantidad){
+        if((this.quantity + cantidad)<=max) {
+            this.quantity = (this.quantity + cantidad);
+        }
+    }
 
     public void lessQuantity(int cantidad) {
         if (this.quantity > 0) {
@@ -48,7 +54,7 @@ public class Producto implements Parcelable{
     }
 
     public Producto(Parcel in){
-        String[] data= new String[7];
+        String[] data= new String[8];
 
         in.readStringArray(data);
         this.name= data[0];
@@ -60,6 +66,7 @@ public class Producto implements Parcelable{
         Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
         this.pic=bitmap;
         this.quantity=Integer.parseInt(data[6]);
+        this.max=Integer.parseInt(data[7]);
     }
     @Override
     public int describeContents() {
@@ -74,7 +81,7 @@ public class Producto implements Parcelable{
         this.pic.compress(Bitmap.CompressFormat.PNG,100, baos);
         byte [] b=baos.toByteArray();
         String temp=Base64.encodeToString(b, Base64.DEFAULT);
-        dest.writeStringArray(new String[]{this.name,this.price,this.image,this.id,this.description,temp,String.valueOf(this.quantity)});
+        dest.writeStringArray(new String[]{this.name,this.price,this.image,this.id,this.description,temp,String.valueOf(this.quantity),String.valueOf(this.max)});
     }
 
     public static final Parcelable.Creator<Producto> CREATOR= new Parcelable.Creator<Producto>() {

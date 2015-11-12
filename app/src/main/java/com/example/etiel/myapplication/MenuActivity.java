@@ -60,6 +60,10 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
+/**
+ * Created by Etiel on 08/11/2015.
+ *
+ */
 public class MenuActivity extends AppCompatActivity implements ActionBar.TabListener {
 
     /**
@@ -79,6 +83,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
     static Integer cod,cod1,cod2,cod3,cod4,cod5,cod6,cod7,cod8,cod9,cod10,cod11,codc;
     String res;
     private static TextView Texto,ET_buscar2,ET_buscar3,ET_buscar4,ET_buscar5,ET_buscar6,ET_buscar7,ET_buscar8,ET_buscar9,ET_buscar10,ET_buscar11,ET_buscarc;
+    public static TextView vacio;
     private static WebView wv_prod;
     private static Button bt_scan;
     public static ListView listado2,listado3,listado4,listado5,listado6,listado7,listado8,listado9,listado10,listado11,listadoc;
@@ -171,6 +176,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
     }
 
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -204,7 +210,12 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
             MenuActivity.adapterc = //construimos un adapter de String
                     new CarritoAdapter(MenuActivity.cont, MenuActivity.compras);
             MenuActivity.listadoc.setAdapter(MenuActivity.adapterc);
+                if(MenuActivity.compras.size()!=0){
+                    MenuActivity.vacio.setVisibility(View.GONE);
+                }else{MenuActivity.vacio.setVisibility(View.VISIBLE);}
                 break;
+
+
         }
     }
 
@@ -214,6 +225,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
     }
 
     /**
@@ -778,7 +790,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                     break;
                 case 12:
                     listadoc = (ListView)rootView.findViewById(R.id.listView);
-                    TextView vacio=(TextView) rootView.findViewById(R.id.vacio);
+                    vacio=(TextView) rootView.findViewById(R.id.vacio);
 
                     FloatingActionButton comprar=(FloatingActionButton) rootView.findViewById(R.id.comprar);
                     //ObtDatos(menu);
@@ -1124,6 +1136,7 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                 //mlistado.add(texto);
                 p=new Producto(jsonArray.getJSONObject(i).getString("name"),jsonArray.getJSONObject(i).getString("price"),jsonArray.getJSONObject(i).getString("image_file_name"),jsonArray.getJSONObject(i).getString("id"),jsonArray.getJSONObject(i).getString("description"));
                 p.setQuantity(jsonArray.getJSONObject(i).getInt("cuantity"));
+                p.setMax(jsonArray.getJSONObject(i).getInt("cuantity"));
                 //("pfin ho,ho", p.getName());
                 mlistado.add(p);
             }
@@ -1371,24 +1384,14 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
             if(result==null){
             }else {
                 String respPHP = result.trim().replaceAll("[^0-1]", "");
-                Toast.makeText(MenuActivity.cont, result, Toast.LENGTH_LONG).show();
                 if(respPHP.equalsIgnoreCase("1")){
-                    Toast.makeText(MenuActivity.cont, "Exito", Toast.LENGTH_LONG).show();
-                    switch (n){
-                        default:
-                            break;
-                        case 0:
-                            for (int i = 0; i < compras.size(); i++) {
-                                String sid= compras.get(i).getId();
-                                String scantidad=Integer.toString(compras.get(i).getQuantity());
-                                a = new IniciarSesion(cont, sid, scantidad, i+1);
-                                a.execute();
-                            }
+                    Toast.makeText(MenuActivity.cont, "Compra Exitosa", Toast.LENGTH_LONG).show();
+
                             compras=new ArrayList<Producto>();
-                            break;
-                    }
+
+
                 }else {
-                    //Toast.makeText(MenuActivity.cont, "Usuario y/o contraseña incorrectos!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MenuActivity.cont, "Usuario y/o contraseña incorrectos!", Toast.LENGTH_LONG).show();
                 }
             }
         }
