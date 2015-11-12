@@ -797,9 +797,9 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                     comprar.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Login(view, getActivity());
-
-
+                            if(compras.size()!=0) {
+                                Login(view, getActivity());
+                            }
                         }
                     });
                     adapterc = //construimos un adapter de String

@@ -93,15 +93,16 @@ public class DescripcionActivity extends AppCompatActivity {
                     Log.d("pfin carrito", "se agrego al carrito");
                 }
 
+                if (!producto.getQuantity().equals(0)) {
+                    Handler del = new Handler();
+                    del.postDelayed(new Runnable() {
+                        public void run() {
+                            MenuActivity.anuncio(producto);
 
-                Handler del = new Handler();
-                del.postDelayed(new Runnable() {
-                    public void run() {
-                        MenuActivity.anuncio(producto);
-
-                    }
-                }, 600);
-                finish();
+                        }
+                    }, 600);
+                    finish();
+                }
 
             }
         });
