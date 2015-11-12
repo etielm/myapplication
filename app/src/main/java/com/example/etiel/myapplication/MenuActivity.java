@@ -778,6 +778,8 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                     break;
                 case 12:
                     listadoc = (ListView)rootView.findViewById(R.id.listView);
+                    TextView vacio=(TextView) rootView.findViewById(R.id.vacio);
+
                     FloatingActionButton comprar=(FloatingActionButton) rootView.findViewById(R.id.comprar);
                     //ObtDatos(menu);
                     comprar.setOnClickListener(new View.OnClickListener() {
@@ -791,6 +793,9 @@ public class MenuActivity extends AppCompatActivity implements ActionBar.TabList
                     adapterc = //construimos un adapter de String
                             new CarritoAdapter(cont, compras);
                     listadoc.setAdapter(adapterc);
+                    if(compras.size()!=0){
+                        vacio.setVisibility(View.GONE);
+                    }
                     Log.d("pfin gen", "se genero");
                     break;
                 default:
